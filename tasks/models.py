@@ -54,12 +54,3 @@ class Task:
                 self.completed_at.isoformat() if self.completed_at else None
             ),
         }
-
-
-task = Task("Learn Python", "Improve python skill")
-
-task_dict = task.to_dict()
-
-task_json = dumps(task_dict, indent=4)
-
-print(task_json)
