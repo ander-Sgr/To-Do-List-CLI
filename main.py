@@ -1,5 +1,6 @@
 from tasks import Task, TaskManager, Status, Storage
 from utils import TasksDisplay
+from datetime import datetime
 
 task_manager = TaskManager()
 storage = Storage()
@@ -17,4 +18,5 @@ task_manager.add_task(
 
 
 storage.save_tasks(task_manager.tasks)
+task_manager.edit_task(task_id=task_manager.get_task(1), completed_at=datetime.now())
 display.show_tasks()
