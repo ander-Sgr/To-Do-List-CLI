@@ -1,22 +1,17 @@
 from tasks import Task, TaskManager, Status, Storage
 from utils import TasksDisplay
-from datetime import datetime
 
-task_manager = TaskManager()
 storage = Storage()
+task_manager = TaskManager(storage)
 display = TasksDisplay(storage)
 
-
-task_manager.add_task(Task("Learn python 1", "Improve skill in python"))
-task_manager.add_task(Task("Learn python 2", "Improve skill in python"))
-task_manager.add_task(
-    Task(
-        "Learn about Pulimi with python",
-        "I have to see some tutorials about how can in implement it",
-    )
-)
-
-
-storage.save_tasks(task_manager.tasks)
-task_manager.edit_task(task_id=task_manager.get_task(1), completed_at=datetime.now())
+#task_manager.add_task(Task("Nuevo item", "realizar un insert"))
+#task_manager.add_task(Task("Nuevo item", "realizar un insert"))
+#task_manager.add_task(Task("Nuevo item", "realizar un insert"))
+#task_manager.add_task(Task("Nuevo item", "realizar un insert"))
+t = task_manager.get_task(2)
+new_task = (Task("hola", "descip", t['id']))
+task_new = task_manager.modify_task(new_task, t['id'])
+print("----------------")
+print(t)
 display.show_tasks()
