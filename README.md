@@ -1,59 +1,59 @@
 # To-Do List CLI
 
-Esta es una aplicación de línea de comandos (CLI) para gestionar una lista de tareas. Permite crear, listar, editar y eliminar tareas de manera sencilla.
+This is an application on CLI for manage a a to-do list. Allows to create, modify, list and delete tasks in a easy way
 
-## Requisitos
+## Requirements
 
-- Python 3.8 o superior
+- Python 3.8 o higher
 
-## Instalación
+## Installation
 
-Clona este repositorio e instala los paquetes necesarios:
+Clone this repo.
 
 ```sh
 $ git clone git@github.com:ander-Sgr/to-do-list.git
 ```
 
-## Uso
+## Use
 
-Ejecuta el script principal `main.py` con las siguientes opciones:
+Runs the main script `main.py` with follow options.
 
-### Agregar una nueva tarea
+### Add a new task
 
 ```sh
-$ python main.py --create --title "Nueva tarea" --descrip "Descripción de la tarea"
+$ python main.py --create --title "New task" --descrip "Description's task"
 ```
 
-### Listar todas las tareas
+### List all task
 
 ```sh
 $ python main.py --list
 ```
 
-Ejemplo de salida:
+Output example:
 
 ```
 ┌────────────┬────────────────────┬─────────┬─────────────────────┬──────────────┐
 │   Title    │    Description     │  Status │      Created at     │ Completed at │
 ├────────────┼────────────────────┼─────────┼─────────────────────┼──────────────┤
-│ Nuevo item │ realizar un insert │ Pending │ 2025-02-18 00:52:15 │ N/A          │
+│ Nuevo item │ insert insert      │ Pending │ 2025-02-18 00:52:15 │ N/A          │
 │ hola       │ descip             │ Pending │ 2025-02-18 00:52:21 │ N/A          │
 └────────────┴────────────────────┴─────────┴─────────────────────┴──────────────┘
 ```
 
-### Editar una tarea
+### Edit a task
 
 ```sh
-$ python main.py --edit <ID_TAREA> --newTitle "Nuevo título" --newDescrip "Nueva descripción" --completed Y
+$ python main.py --edit <ID_TAREA> --newTitle "New title" --newDescrip "New description" --completed Y
 ```
 
-### Eliminar una tarea
+### Delete a task
 
 ```sh
-$ python main.py --delete <ID_TAREA>
+$ python main.py --delete <ID_TASK>
 ```
 
-## Estructura del Proyecto
+## Project structure
 
 ```
 .
