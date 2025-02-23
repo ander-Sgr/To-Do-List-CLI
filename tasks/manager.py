@@ -12,7 +12,7 @@ class TaskManager:
         if isinstance(task, dict):
             data = Task.from_dict(task)
             return data
-    
+
     def get_last_id(self):
         if self.tasks:
             return max(task["id"] for task in self.tasks)
@@ -39,17 +39,14 @@ class TaskManager:
         if task:
             if isinstance(task, dict):
                 task = Task.from_dict(task)
-                task.title = updated_task.title
-                task.description = updated_task.description
-                task.status = updated_task.status
-                for i, d in enumerate(self.tasks):
-                    if d["id"] == task.id:
-                        print(task.title)
+                for i, t in enumerate(self.tasks):
+                    if t["id"] == task.id:
                         self.tasks[i] = updated_task.to_dict()
                 self.storage.save_all_tasks(self.tasks)
-                        
-                        
+        return task
+
     def delete_task(self, task_id: int):
-        task = self.__exist_task(task_id)
+        task = self.__exists_task(task_id)
         if task:
-            self.tasks.remove(task)
+            self.tasks = [t for t in self.tasks if t["id"] != task_id]
+            self.storage.save_all_tasks(self.tasks)
