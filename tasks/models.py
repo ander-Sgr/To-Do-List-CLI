@@ -1,5 +1,6 @@
 from datetime import datetime
 from enum import Enum
+from .storage import Storage
 
 
 class Status(Enum):
