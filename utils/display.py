@@ -1,4 +1,4 @@
-from tasks import Task, Storage
+from tasks import Task, Storage, TaskManager
 from datetime import datetime
 
 
@@ -6,9 +6,13 @@ class TasksDisplay:
 
     def __init__(self, storage: Storage):
         self.storage = storage
+        self.task_manager = TaskManager(self.storage)
 
     def __format_date(self, date_str):
-        date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%f")
+        if isinstance(date_str, datetime):
+            date = date_str
+        else:
+            date = datetime.strptime(date_str, "%Y-%m-%dT%H:%M:%S.%f")
         return date.strftime("%Y-%m-%d %H:%M:%S")
 
     def __get_max_str(self, tasks, field):
@@ -48,8 +52,7 @@ class TasksDisplay:
         }
         return status_map.get(status)
 
-
-    def show_tasks(self):
+    def list_tasks(self):
         tasks = self.storage.load_tasks()
 
         for task in tasks:
@@ -61,7 +64,9 @@ class TasksDisplay:
         max_len_descrip = self.__get_max_str(tasks, "description")
         max_len_status = self.__get_max_str(tasks, "status")
         max_len_created_at = self.__get_max_str(tasks, "created_at")
-        max_len_completed_at = max(self.__get_max_str(tasks, "completed_at"), len("N/A"))
+        max_len_completed_at = max(
+            len("Completed at"), self.__get_max_str(tasks, "completed_at")
+        )
         self.__show_header(
             max_len_title,
             max_len_descrip,
@@ -72,7 +77,7 @@ class TasksDisplay:
 
         for task in tasks:
             title = task["title"].ljust(max_len_title)
-            description = task.get("description", "").ljust(max_len_descrip)
+            description = task.get("description").ljust(max_len_descrip)
             status = task["status"].ljust(max_len_status)
             created_at = task["created_at"].ljust(max_len_created_at)
             completed_at = (
@@ -90,4 +95,31 @@ class TasksDisplay:
             max_len_status,
             max_len_created_at,
             max_len_completed_at,
+        )
+
+    def show_task(self, task: Task):
+        t = task.to_dict()
+        completed_at = self.__format_date(task.completed_at) if task.completed_at else "N/A"
+        created_at = self.__format_date(task.created_at)
+        self.__show_header(
+            len(task.title),
+            len(task.description),
+            len(task.status.value),
+            len(created_at),
+            max(len(completed_at), len('completed at'))
+        )
+        completed_at = (
+            completed_at.ljust(len(completed_at))
+            if t["completed_at"]
+            else "N/A".ljust(max(len(completed_at), len('completed at')))
+        )
+        print(
+            f"│ {task.title} │ {task.description} │ {task.status.value} │ {created_at} │ {completed_at} │"
+        )
+        self.__show_footer(
+            len(task.title),
+            len(task.description),
+            len(task.status.value),
+            len(created_at),
+            max(len(completed_at), len('completed at'))
         )
